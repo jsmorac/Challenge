@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html lang="es">
+    <head>
+        
+        <meta charset="UTF-8">
+        <title> Alura </title>
+        <link rel="stylesheet" href="style2.css">
+        
+        <script>
+            function ocultar(){
+                var frame5 = document.querySelector(".frame5");
+                frame5.style.display = "none";
+                var imagen = document.getElementById("Muñeco");
+                imagen.parentNode.removeChild(imagen);
+                
+            }
+            function verificar() {
+                var inputTexto = document.getElementById("texto");
+                var paginaElement = document.getElementById("pagina2");
+
+                if (/[A-Z]/.test(inputTexto.value)) {
+                    paginaElement.innerHTML = "No se permiten letras en mayúscula";
+                    inputTexto.value = inputTexto.value.toLowerCase(); // Convertir todo el texto a minúsculas
+                    ocultar()
+                    return false;
+                } else {
+                    paginaElement.innerHTML = "";
+                    return true;
+                }
+            }
+
+
+            function reemplazarLetras(texto) {
+                let nueva_palabra = "";
+                for (let letra of texto) {
+                    if (letra == "a") {
+                    nueva_palabra += "ai";
+                    } else if (letra == "e") {
+                    nueva_palabra += "enter";
+                    } else if (letra == "i") {
+                    nueva_palabra += "imes";
+                    } else if (letra == "o") { 
+                    nueva_palabra += "ober";
+                    } else if (letra == "u") {
+                    nueva_palabra += "ufat";
+                    } else {
+                    nueva_palabra += letra;
+                    }
+                }
+                return nueva_palabra; // La llave de cierre de la función estaba en la posición incorrecta
+            }
+
+            function quitarReemplazo(reemplazos) {
+                let textonormal = reemplazos
+                .replace(/ai/g, "a")
+                .replace(/enter/g, "e")
+                .replace(/imes/g, "i")
+                .replace(/ober/g, "o")
+                .replace(/ufat/g, "u");
+                return textonormal
+            }
+            function encriptarMensaje() {
+                var inputTexto = document.getElementById("texto");
+                var mensajeOriginal = inputTexto.value.trim();
+
+                // Validar que el texto no contenga mayúsculas
+                if (!verificar()) {
+                    return;
+                }
+                if (inputTexto.value!==""){
+                    var mensajeEncriptado = reemplazarLetras(mensajeOriginal);
+                    document.getElementById("pagina2").innerHTML = mensajeEncriptado;
+                    inputTexto.value = ""; 
+                    ocultar()
+                }
+                return
+                
+            }
+            function desencriptarMensaje(){
+                var texto2 = document.getElementById("texto");
+                if (!verificar()) {
+                    return;
+                }
+                if (texto2.value!==""){
+                    var mensajeEncriptado = texto2.value.trim()
+                    var mensaje = quitarReemplazo(mensajeEncriptado);
+                    document.getElementById("pagina2").innerHTML = mensaje;
+                    texto2.value = ""; // Limpiar contenido del input
+                    ocultar()
+                }
+            }
+            function copiar() {
+                let copiartexto = document.getElementById("pagina2").textContent; 
+                navigator.clipboard.writeText(copiartexto);
+            }
+        </script>
+    </head>
+
+    <body>
+        <div class="Dimensiones"></div>
+        <div>
+            <img id="icono" src="Logo.png">
+            <img id="Muñeco" src="Muñeco.png">
+            <h1 id="Rectangulo"></h1>
+            <h3 id="pagina2"></h3>
+            <img id="vector" src="Vector.png">
+        </div>
+
+        <textarea class="texto" type="text" id="texto" name="texto" placeholder="Ingresa el texto aqui" pattern="[a-zñü]+" ></textarea>
+        
+        
+        <div class="frame5">
+            <contexto-1> Ningun mensaje fue <br>encontrado</br> </contexto-1> 
+            <contexto-2> Ingresa el texto que desea encriptar o </br> desencriptar <br> </contexto-2> 
+        </div>
+
+
+        <div class="frame3">
+            <button class = "boton1" onclick="encriptarMensaje()"> <letra1>  Encriptar </letra1></button>
+            <button class = "boton2" onclick="desencriptarMensaje()"> <letra2>  Descencriptar </letra2></button>
+        </div>
+
+        <div class="frame4">
+            <button class="boton3" onclick="copiar()"><letra3> Copiar </letra3></button>
+        </div>
+
+        <div class="frame1">
+            
+            <h4 class="circulo"></h4>
+            <condicion>Solo letras minusculas y sin acento</condicion>
+        </div>
+
+
+    </body>
+</html>
